@@ -13,9 +13,10 @@ library(conflicted)
 library(tidyverse)
 library(R6)
 library(formatR)
+library(lubridate)
 ```
 ```{r readpolls, include = FALSE}
-polls = readr::read_delim("/home/mitch/courses/data-analysis/datasets/polls_us_election_2016.csv")
+polls = readr::read_delim("polls_us_election_2016.csv")
 ```
 ```{r usepolls}
 allstates = polls$state |>
