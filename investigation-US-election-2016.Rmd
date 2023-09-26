@@ -1,0 +1,255 @@
+---
+title: "investigation-US-election-2016"
+output: pdf_document
+---
+
+```{r knitropts, include = FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE)
+```
+```{r libs, message = FALSE}
+library(conflicted)
+	conflicts_prefer(dplyr::filter, dplyr::lag)
+library(tidyverse)
+library(R6)
+library(formatR)
+library(lubridate)
+```
+```{r readpolls, include = FALSE}
+polls = readr::read_delim("polls_us_election_2016.csv")
+```
+```{r usepolls}
+allstates = polls$state |>
+	unique() |>
+	sort()
+polls = polls |>
+	mutate(
+		interval = startdate %--% enddate,
+		middate = ymd(startdate + (enddate - startdate)/2),
+		.keep = "unused",
+		.after = "state"
+	) |>
+	mutate(
+		grade = grade |>
+			factor(levels = c("A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", NA)),
+		.keep = "unused",
+		.before = "samplesize"
+	)
+```
+```{r finalresults}
+finalresults = tibble(
+	state = allstates,
+	clinton = c(34.36, 36.55, 45.13, 33.65, 61.73, 48.16, 54.57, 53.09, 90.86, 47.82, 45.64, 62.22, 27.49, 55.83, 37.77, 41.74, 36.05, 32.68, 38.45, 47.83, 53.96, 40.98, 60.33, 60.01, 47.27, 46.44, 40.11, 38.14, 35.75, 33.70, 35.46, 44.92, 19.73, 47.92, 46.83, 55.45, 48.26, 59.01, 46.17, 27.23, 43.56, 28.93, 39.09, 47.46, 54.41, 40.67, 31.74, 34.72, 43.24, 48.18, 27.46, 56.68, 49.73, 52.54, 26.43, 46.45, 21.88),
+	trump = c(62.08, 51.28, 48.67, 60.57, 31.62, 43.25, 40.93, 41.71, 4.09, 49.02, 50.77, 30.04, 59.26, 38.76, 56.94, 51.15, 56.65, 62.52, 58.09, 44.87, 39.15, 51.26, 33.91, 32.81, 47.50, 44.92, 57.94, 56.77, 56.17, 58.75, 56.18, 47.16, 73.92, 45.50, 46.46, 41.35, 40.04, 36.52, 49.83, 62.96, 51.69, 65.32, 39.09, 48.18, 38.90, 54.94, 61.53, 60.72, 52.23, 46.09, 45.54, 30.27, 44.41, 36.83, 68.50, 47.22, 68.17),
+	johnson = c(2.09, 5.88, 4.13, 2.65, 3.37, 5.18, 2.96, 3.33, 1.58, 2.20, 3.05, 3.72, 4.10, 3.79, 4.90, 3.78, 4.68, 2.79, 1.87, 5.09, 4.71, 5.52, 2.86, 4.15, 3.59, 3.84, 1.19, 3.47, 5.64, 4.61, 4.97, 4.54, 4.32, 3.32, 4.14, 1.87, 9.34, 2.29, 2.74, 6.22, 3.17, 5.75, 4.71, 2.38, 3.18, 2.34, 5.63, 2.81, 3.16, 3.28, 3.50, 3.20, 2.97, 4.85, 3.22, 3.58, 5.19),
+	mcmullin = c(NA, NA, 0.68, 1.17, 0.28, 1.04, 0.13, 0.16, NA, NA, 0.32, NA, 6.73, 0.21, NA, 0.79, 0.55, 1.18, 0.42, 0.25, 0.20, 0.31, 0.35, NA, 0.17, 1.80, NA, 0.25, 0.46, NA, NA, NA, NA, NA, 0.14, NA, 0.73, 0.13, NA, NA, 0.23, NA, NA, 0.10, 0.17, 1.00, NA, 0.48, 0.47, 0.54, 21.54, 0.20, 1.36, NA, 0.15, 0.40, NA)
+)
+```
+```{r candidatesclass}
+# helps filter for candidate name in results
+candidatenames = c("clinton", "trump", "johnson", "mcmullin")
+
+candidate = R6Class(
+	classname = "candidate",
+	public = list(
+		name = "character",
+		opponents = "character",
+		colour = "character",
+		polls = "tbl_df",
+		finalresults = "tbl_df",
+		
+		initialize = function(name, colour){
+			self$name = name
+			self$colour = colour
+			self$opponents = candidatenames[candidatenames != self$name] # the list of other candidates
+			self$polls = polls |>
+				select(!contains(self$opponents)) |> # filter polls to only this candidate
+				rename(
+					rawpolls = starts_with("rawpoll"),
+					adjpolls = starts_with("adjpoll")
+				) # rename columns for use in candidateplot functions
+			self$finalresults = finalresults |>
+				select(!contains(self$opponents))
+		} # end of initialize
+	) # end of list
+)
+```
+
+```{r candidates}
+clinton = candidate$new(name = "clinton", colour = "blue")
+trump = candidate$new(name = "trump", colour = "red")
+johnson = candidate$new(name = "johnson", colour = "orange")
+mcmullin = candidate$new(name = "mcmullin", colour = "purple")
+
+candidates = list(clinton, trump, johnson, mcmullin)
+rm(candidatenames) # only needed for candidate construction
+```
+
+```{r limitdates}
+densepollsbegin = function(thestate, thedate) { # for graphing purposes
+	# calculate the earliest date after thedate (inclusive) where there are three consecutive polls in short succession (within three months)
+	statepolls = polls |>
+		filter(state == thestate, middate >= thedate) |>
+		arrange(middate)
+	earliestdate = statepolls$middate |>
+		min()
+	earlydate = earliestdate
+	while (nrow(statepolls) > 2) {
+		statepolls = statepolls[-1,]
+		threemos = interval(
+			start = earlydate,
+			end = earlydate %m+% months(3, abbreviate = FALSE)
+		)
+		if (
+			threemos |>
+			int_overlaps(
+				statepolls$interval[which.min(sapply(statepolls$interval, int_start))]
+			)
+		) {
+			temppolls = statepolls[-1,]
+			if (
+				threemos |>
+				int_overlaps(
+					temppolls$interval[which.min(sapply(temppolls$interval, int_start))]
+				)
+			) {
+				return(earlydate)
+				break
+			}
+		}
+		earlydate = statepolls$middate |>
+			min()
+	}
+	return(earliestdate) # failed to find three such polls; just graph all polls
+}
+
+earliestdate = ymd("2015-11-06")
+finaldate = ymd("2016-11-08")
+```
+
+```{r candidateplotfuncs}
+candidateplotraw = function(thestate, thecandidate, thefirstdate) {
+	statepolls = thecandidate$polls |>
+		filter(state == thestate)
+	if ( # in this state, not all polls for this candidate are NA
+		any(!is.na(statepolls$rawpolls))
+	) {
+		datevsraw = aes(
+			x = statepolls$middate,
+			y = statepolls$rawpolls
+		)
+		return(
+			last_plot() + geom_point(
+				mapping = datevsraw,
+				colour = thecandidate$colour,
+				na.rm = TRUE
+			) + geom_smooth(
+				mapping = datevsraw,
+				colour = thecandidate$colour,
+				fill = thecandidate$colour,
+				alpha = 0.4,
+				na.rm = TRUE
+			) + geom_segment(
+				mapping = aes(
+				x = thefirstdate,
+				y = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+					as.numeric(),
+				xend = finaldate,
+				yend = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+					as.numeric()
+				),
+				colour = thecandidate$colour,
+				linewidth = 1.0
+			)
+		) # end of return
+	} # end of if
+	else return(last_plot()) # catch the case where the candidate was not polled in the given state
+}
+
+candidateplotadj = function(thestate, thecandidate, thefirstdate) {
+	statepolls = thecandidate$polls |>
+		filter(state == thestate)
+	if ( # in this state, not all polls for this candidate are NA
+		any(!is.na(statepolls$adjpolls))
+	) {
+		datevsadj = aes(
+			x = statepolls$middate,
+			y = statepolls$adjpolls
+		)
+		return(
+			last_plot() + geom_point(
+				mapping = datevsadj,
+				colour = thecandidate$colour,
+				na.rm = TRUE
+			) + geom_smooth(
+				mapping = datevsadj,
+				colour = thecandidate$colour,
+				fill = thecandidate$colour,
+				alpha = 0.4,
+				na.rm = TRUE
+			) + geom_segment(
+				mapping = aes(
+				x = thefirstdate,
+				y = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+					as.numeric(),
+				xend = finaldate,
+				yend = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+					as.numeric()
+				),
+				colour = thecandidate$colour,
+				linewidth = 1.0
+			)
+		) # end of return
+	} # end of if
+	else return(last_plot()) # catch the case where the candidate was not polled in the given state
+}
+```
+
+```{r stateplotfuncs}
+stateplotraw = function(thestate) {
+	plot = ggplot()
+	firstdatetoplot = thestate |>
+		densepollsbegin(earliestdate)
+	for (cand in candidates) plot = candidateplotraw(thestate, cand, firstdatetoplot)
+	stateraw = thestate |>
+		paste("Raw Polls", sep = " - ")
+	firstdatetoplot = thestate |>
+		densepollsbegin(earliestdate)
+	
+	return(
+		plot + geom_vline(xintercept = finaldate) + labs(
+			title = stateraw,
+			x = "Date",
+			y = "Voting Intent (%)"
+		) + xlim(firstdatetoplot, finaldate)
+	)
+}
+
+stateplotadj = function(thestate) {
+	plot = ggplot()
+	firstdatetoplot = thestate |>
+		densepollsbegin(earliestdate)
+	for (cand in candidates) plot = candidateplotadj(thestate, cand, firstdatetoplot)
+	stateadj = thestate |>
+		paste("Adjusted Polls", sep = " - ")
+	
+	return(
+		plot + geom_vline(xintercept = finaldate) + labs(
+			title = stateadj,
+			x = "Date",
+			y = "Adjusted Voting Intent (%)"
+		) + xlim(firstdatetoplot, finaldate)
+	)
+}
+```
+
+```{r plots, message = FALSE}
+for (thestate in allstates) {
+	stateplotraw(thestate) |>
+		print()
+	stateplotadj(thestate) |>
+		print()
+}
+```
+
+\clearpage
