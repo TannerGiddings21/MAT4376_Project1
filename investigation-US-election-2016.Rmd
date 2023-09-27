@@ -31,7 +31,23 @@ polls = polls |>
 	) |>
 	mutate(
 		grade = grade |>
-			factor(levels = c("A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", NA)),
+			factor(
+				levels = c(
+					"A+",
+					"A",
+					"A-",
+					"B+",
+					"B",
+					"B-",
+					"C+",
+					"C",
+					"C-",
+					"D+",
+					"D",
+					"D-",
+					NA
+				)
+			),
 		.keep = "unused",
 		.before = "samplesize"
 	)
@@ -87,7 +103,8 @@ rm(candidatenames) # only needed for candidate construction
 
 ```{r limitdates}
 densepollsbegin = function(thestate, thedate) { # for graphing purposes
-	# calculate the earliest date after thedate (inclusive) where there are three consecutive polls in short succession (within three months)
+	# calculate the earliest date after thedate (inclusive) where there are three
+	# consecutive polls in short succession (within two months)
 	statepolls = polls |>
 		filter(state == thestate, middate >= thedate) |>
 		arrange(middate)
@@ -98,7 +115,7 @@ densepollsbegin = function(thestate, thedate) { # for graphing purposes
 		statepolls = statepolls[-1,]
 		threemos = interval(
 			start = earlydate,
-			end = earlydate %m+% months(3, abbreviate = FALSE)
+			end = earlydate %m+% months(2, abbreviate = FALSE)
 		)
 		if (
 			threemos |>
@@ -123,7 +140,7 @@ densepollsbegin = function(thestate, thedate) { # for graphing purposes
 	return(earliestdate) # failed to find three such polls; just graph all polls
 }
 
-earliestdate = ymd("2015-11-06")
+earliestdate = ymd("2016-05-01")
 finaldate = ymd("2016-11-08")
 ```
 
@@ -242,7 +259,6 @@ stateplotadj = function(thestate) {
 	)
 }
 ```
-
 ```{r plots, message = FALSE}
 for (thestate in allstates) {
 	stateplotraw(thestate) |>
@@ -251,5 +267,3 @@ for (thestate in allstates) {
 		print()
 }
 ```
-
-\clearpage
