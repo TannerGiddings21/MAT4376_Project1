@@ -365,11 +365,99 @@ for (state in c("Maine", "Maine CD-1", "Maine CD-2")){
 
 Seeing as the polls for the Nebraskan congressional districts are so sparse, it's difficult to supplement the data with data from pan-Nebraskan polls -- the CD polls are so few in number that they can't serve to support or refute any supplemental data. Although Clinton and Trump polled comparably in the 2nd Nebraskan congressional district, it makes the most sense (for the sake of electoral simulation) to consider Nebraska's electoral votes as a whole, rather than allocating electoral votes by district.
 
-If we were to eliminate some of the polls from lower-graded pollsters, in some states we would run the risk of only keeping polls from one or two sources. Given that each pollster has their own bias, there is reason to avoid overly relying on a single source of polls.
+If we were to eliminate some of the polls from lower-graded pollsters, in some states we would run the risk of only keeping polls from one or two sources. Given that each pollster has their own bias, there is reason to avoid overly relying on a single source for polls.
 
-```{r regression}
+We supplement Maine congressional district data with Maine polls from higher-rated pollsters.
+
+```{r guesswork}
 suppstates = c("District of Columbia", "Maine", "Maine CD-1", "Maine CD-2", "North Dakota", "Rhode Island", "Wyoming", "U.S.")
 
-regpolls = polls |>
-	filter(state %in% suppstates)
+gpolls = polls |>
+	filter(state %in% suppstates) |>
+	mutate(middate = round_date(middate, unit = "week"))
+mainepolls = gpolls |>
+	filter(state == "Maine", grade %in% c("B", "B+", "A-", "A", "A+")) |>
+	select(middate, rawpoll_clinton, rawpoll_trump)
+d1polls = gpolls |>
+	filter(state == "Maine CD-1")
+d1polls2 = gpolls |>
+	filter(state == "Maine CD-1") |>
+	mutate(rawpoll_clinton_dist1 = rawpoll_clinton, rawpoll_trump_dist1 = rawpoll_trump) |>
+	select(middate, rawpoll_clinton_dist1, rawpoll_trump_dist1)
+
+x = merge(mainepolls, d1polls2) |>
+	as_tibble()
+regc = lm(rawpoll_clinton_dist1 ~ rawpoll_clinton, data = x)
+regc
+anova(regc) # pretty lousy. May be due to repeated X-values with different Y-values;
+# low number of datapoints
+regt = lm(rawpoll_trump_dist1 ~ rawpoll_trump, data = x)
+regt
+anova(regt)
+
+newdata = mainepolls |>
+	mutate(rawpoll_clinton = regc$coefficients["(Intercept)"] + regc$coefficients["rawpoll_clinton"]*rawpoll_clinton) |>
+	mutate(rawpoll_trump = regt$coefficients["(Intercept)"] + regt$coefficients["rawpoll_trump"]*rawpoll_trump) |>
+	bind_rows(d1polls)
+newclinton = aes(
+	x = newdata$middate,
+	y = newdata$rawpoll_clinton
+)
+
+newtrump = aes(
+	x = newdata$middate,
+	y = newdata$rawpoll_trump
+)
+
+clintonresult = filter(clinton$finalresults, state == "Maine CD-1")[1,2] |>
+	as.numeric()
+trumpresult = filter(trump$finalresults, state == "Maine CD-1")[1,2] |>
+	as.numeric()
+
+plot = ggplot() + geom_point(
+	mapping = newclinton,
+	colour = clinton$colour,
+	alpha = 0.8,
+	na.rm = TRUE
+) + geom_point(
+	mapping = newtrump,
+	colour = trump$colour,
+	alpha = 0.8,
+	na.rm = TRUE
+) + geom_smooth(
+	mapping = newclinton,
+	colour = clinton$colour,
+	fill = clinton$colour,
+	alpha = 0.4,
+	na.rm = TRUE
+) + geom_segment(
+	mapping = aes(
+		x = ymd("2016-11-01"),
+		y = clintonresult,
+		xend = dayafter,
+		yend = clintonresult
+		),
+	colour = clinton$colour,
+	linewidth = 1.0
+)+ geom_smooth(
+	mapping = newtrump,
+	colour = trump$colour,
+	fill = trump$colour,
+	alpha = 0.4,
+	na.rm = TRUE
+) + geom_segment(
+	mapping = aes(
+		x = ymd("2016-11-01"),
+		y = trumpresult,
+		xend = dayafter,
+		yend = trumpresult
+		),
+	colour = trump$colour,
+	linewidth = 1.0
+) + geom_vline(xintercept = finaldate) + labs(
+		title = "Maine CD-1 raw polls (supplemented)",
+		x = "Date",
+		y = "Voting Intent (%)"
+	) + xlim(begindate, dayafter)+ ylim(yaxes+c(0,2))
+print(plot)
 ```
