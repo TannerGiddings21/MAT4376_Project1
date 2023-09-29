@@ -14,6 +14,7 @@ library(tidyverse)
 library(R6)
 library(formatR)
 library(lubridate)
+library(rmarkdown)
 ```
 ```{r readpolls, include = FALSE}
 polls = readr::read_delim("polls_us_election_2016.csv")
@@ -108,30 +109,28 @@ densepollsbegin = function(thestate, thedate) { # for graphing purposes
 	statepolls = polls |>
 		filter(state == thestate, middate >= thedate) |>
 		arrange(middate)
-	earliestdate = statepolls$middate |>
+	earlydate = statepolls$middate |>
 		min()
-	earlydate = earliestdate
 	while (nrow(statepolls) > 2) {
 		statepolls = statepolls[-1,]
-		threemos = interval(
+		mos = interval(
 			start = earlydate,
 			end = earlydate %m+% months(2, abbreviate = FALSE)
 		)
 		if (
-			threemos |>
+			mos |>
 			int_overlaps(
 				statepolls$interval[which.min(sapply(statepolls$interval, int_start))]
 			)
 		) {
 			temppolls = statepolls[-1,]
 			if (
-				threemos |>
+				mos |>
 				int_overlaps(
 					temppolls$interval[which.min(sapply(temppolls$interval, int_start))]
 				)
 			) {
 				return(earlydate)
-				break
 			}
 		}
 		earlydate = statepolls$middate |>
@@ -140,14 +139,26 @@ densepollsbegin = function(thestate, thedate) { # for graphing purposes
 	return(earliestdate) # failed to find three such polls; just graph all polls
 }
 
-earliestdate = ymd("2016-05-01")
+earliestdate = ymd("2016-08-01")
 finaldate = ymd("2016-11-08")
+dayafter = finaldate + days(1) # used just for technical graphing purposes
 ```
 
 ```{r candidateplotfuncs}
 candidateplotraw = function(thestate, thecandidate, thefirstdate) {
 	statepolls = thecandidate$polls |>
 		filter(state == thestate)
+	
+	# methods to avoid plotting Johnson's numbers where his polls are insignificant
+	# check whether Johnson obtained more than 13% raw in any poll conducted after Sep. 1st
+	if (thecandidate$name == "johnson" && !(thestate %in% congdistricts)) {
+		statepolls = statepolls |>
+			filter(middate >= ymd("2016-09-01"))
+		if (max(statepolls$rawpolls, na.rm = TRUE)<=13.0) {
+			return(last_plot())
+		}
+	}
+	
 	if ( # in this state, not all polls for this candidate are NA
 		any(!is.na(statepolls$rawpolls))
 	) {
@@ -155,10 +166,13 @@ candidateplotraw = function(thestate, thecandidate, thefirstdate) {
 			x = statepolls$middate,
 			y = statepolls$rawpolls
 		)
+		voteresult = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+			as.numeric()
 		return(
 			last_plot() + geom_point(
 				mapping = datevsraw,
 				colour = thecandidate$colour,
+				alpha = 0.8,
 				na.rm = TRUE
 			) + geom_smooth(
 				mapping = datevsraw,
@@ -168,12 +182,10 @@ candidateplotraw = function(thestate, thecandidate, thefirstdate) {
 				na.rm = TRUE
 			) + geom_segment(
 				mapping = aes(
-				x = thefirstdate,
-				y = filter(thecandidate$finalresults, state == thestate)[1,2] |>
-					as.numeric(),
-				xend = finaldate,
-				yend = filter(thecandidate$finalresults, state == thestate)[1,2] |>
-					as.numeric()
+				x = ymd("2016-11-01"),
+				y = voteresult,
+				xend = dayafter,
+				yend = voteresult
 				),
 				colour = thecandidate$colour,
 				linewidth = 1.0
@@ -184,19 +196,34 @@ candidateplotraw = function(thestate, thecandidate, thefirstdate) {
 }
 
 candidateplotadj = function(thestate, thecandidate, thefirstdate) {
+	
 	statepolls = thecandidate$polls |>
-		filter(state == thestate)
+		filter(state == thestate) # candidate's polling numbers in the given state
+	
+	# methods to avoid plotting Johnson's numbers where his polls are insignificant
+	# check whether Johnson obtained more than 13% (raw! for comparison to plots of raw polls) in any poll conducted after Sep. 1st
+	if (thecandidate$name == "johnson") {
+		statepolls = statepolls |>
+			filter(middate >= ymd("2016-09-01"))
+		if (max(statepolls$rawpolls, na.rm = TRUE)<=13.0) {
+			return(last_plot())
+		}
+	}
+	
 	if ( # in this state, not all polls for this candidate are NA
 		any(!is.na(statepolls$adjpolls))
-	) {
+	) { # so we can display this candidate's polls here
 		datevsadj = aes(
 			x = statepolls$middate,
 			y = statepolls$adjpolls
 		)
+		voteresult = filter(thecandidate$finalresults, state == thestate)[1,2] |>
+			as.numeric()
 		return(
 			last_plot() + geom_point(
 				mapping = datevsadj,
 				colour = thecandidate$colour,
+				alpha = 0.8,
 				na.rm = TRUE
 			) + geom_smooth(
 				mapping = datevsadj,
@@ -206,12 +233,10 @@ candidateplotadj = function(thestate, thecandidate, thefirstdate) {
 				na.rm = TRUE
 			) + geom_segment(
 				mapping = aes(
-				x = thefirstdate,
-				y = filter(thecandidate$finalresults, state == thestate)[1,2] |>
-					as.numeric(),
-				xend = finaldate,
-				yend = filter(thecandidate$finalresults, state == thestate)[1,2] |>
-					as.numeric()
+				x = ymd("2016-11-01"),
+				y = voteresult,
+				xend = dayafter,
+				yend = voteresult
 				),
 				colour = thecandidate$colour,
 				linewidth = 1.0
@@ -223,30 +248,32 @@ candidateplotadj = function(thestate, thecandidate, thefirstdate) {
 ```
 
 ```{r stateplotfuncs}
-stateplotraw = function(thestate) {
+stateplotraw = function(thestate, firstdatetoplot) {
 	plot = ggplot()
-	firstdatetoplot = thestate |>
-		densepollsbegin(earliestdate)
-	for (cand in candidates) plot = candidateplotraw(thestate, cand, firstdatetoplot)
+	for (cand in candidates){
+		# Mcmullin was not a factor outside of Utah
+		# don't attempt to plot his polls in other states
+		if(cand$name != "mcmullin" || thestate == "Utah"){
+			plot = candidateplotraw(thestate, cand, firstdatetoplot)
+		}
+	} # end of for
 	stateraw = thestate |>
 		paste("Raw Polls", sep = " - ")
-	firstdatetoplot = thestate |>
-		densepollsbegin(earliestdate)
 	
 	return(
 		plot + geom_vline(xintercept = finaldate) + labs(
 			title = stateraw,
 			x = "Date",
 			y = "Voting Intent (%)"
-		) + xlim(firstdatetoplot, finaldate)
+		) + xlim(firstdatetoplot, dayafter)
 	)
 }
 
-stateplotadj = function(thestate) {
+stateplotadj = function(thestate, firstdatetoplot) {
 	plot = ggplot()
-	firstdatetoplot = thestate |>
-		densepollsbegin(earliestdate)
-	for (cand in candidates) plot = candidateplotadj(thestate, cand, firstdatetoplot)
+	for (cand in candidates){
+		plot = candidateplotadj(thestate, cand, firstdatetoplot)
+	}
 	stateadj = thestate |>
 		paste("Adjusted Polls", sep = " - ")
 	
@@ -255,15 +282,94 @@ stateplotadj = function(thestate) {
 			title = stateadj,
 			x = "Date",
 			y = "Adjusted Voting Intent (%)"
-		) + xlim(firstdatetoplot, finaldate)
+		) + xlim(firstdatetoplot, dayafter)
 	)
 }
 ```
-```{r plots, message = FALSE}
-for (thestate in allstates) {
-	stateplotraw(thestate) |>
+\pagebreak
+```{r plots, message = FALSE, echo = FALSE, fig.height = 4}
+# states that vote by congressional district
+congdistricts = c("Maine", "Maine CD-1", "Maine CD-2", "Nebraska CD-1", "Nebraska CD-2", "Nebraska CD-3")
+
+noncong = allstates[!(allstates %in% congdistricts)]
+
+for (thestate in noncong) {
+	begindate = thestate |>
+		densepollsbegin(earliestdate)
+	stateplotraw(thestate, begindate) |>
 		print()
-	stateplotadj(thestate) |>
+	stateplotadj(thestate, begindate) |>
 		print()
 }
+```
+
+Maine has two congressional districts; as such, from the data of one congressional district and of the state as a whole, we can expect to reconstruct the data for the other congressional district (as long as the poll dates are relatively close together).
+
+```{r plot congs}
+
+yaxes = c(0, 30)
+	
+	for (cand in c(clinton, trump, johnson)) { # get common y-limits to use on axes
+		for (dist in c("Maine", "Maine CD-1", "Maine CD-2")){
+			voteresult = filter(cand$finalresults, state == dist)[1,2] |>
+				as.numeric()
+		
+			candpolls = cand$polls |>
+				filter(state == dist)
+		
+			datevsraw = aes(
+				x = candpolls$middate,
+				y = candpolls$rawpolls
+			)
+			plot = ggplot() + geom_point(
+				mapping = datevsraw,
+				colour = cand$colour,
+				alpha = 0.8,
+				na.rm = TRUE
+			) + geom_smooth(
+				mapping = datevsraw,
+				colour = cand$colour,
+				fill = cand$colour,
+				alpha = 0.4,
+				na.rm = TRUE
+			) + geom_segment(
+				mapping = aes(
+				x = ymd("2016-11-01"),
+				y = voteresult,
+				xend = dayafter,
+				yend = voteresult
+				),
+				colour = cand$colour,
+				linewidth = 1.0
+			)
+		
+		yaxes = c(min(yaxes[1], layer_scales(plot)$y$range$range[1]), max(yaxes[2], layer_scales(plot)$y$range$range[2]))
+		}
+	}
+
+for (state in c("Maine", "Maine CD-1", "Maine CD-2")){
+	plot = stateplotraw(state, begindate)
+	
+	stateraw = state |>
+		paste("Raw Polls", sep = " - ")
+
+	plot = plot + geom_vline(xintercept = finaldate) + labs(
+		title = stateraw,
+		x = "Date",
+		y = "Voting Intent (%)"
+	) + xlim(begindate, dayafter)+ ylim(yaxes+c(0,2))
+
+	print(plot)
+}
+```
+
+Seeing as the polls for the Nebraskan congressional districts are so sparse, it's difficult to supplement the data with data from pan-Nebraskan polls -- the CD polls are so few in number that they can't serve to support or refute any supplemental data. Although Clinton and Trump polled comparably in the 2nd Nebraskan congressional district, it makes the most sense (for the sake of electoral simulation) to consider Nebraska's electoral votes as a whole, rather than allocating electoral votes by district.
+
+If we were to eliminate some of the polls from lower-graded pollsters, in some states we would run the risk of only keeping polls from one or two sources. Given that each pollster has their own bias, there is reason to avoid overly relying on a single source of polls.
+
+```{r regression}
+suppstates = c("District of Columbia", "Maine", "Maine CD-1", "Maine CD-2", "North Dakota", "Rhode Island", "Wyoming", "U.S.")
+
+regpolls = polls |>
+	filter(state %in% suppstates)
 ```
