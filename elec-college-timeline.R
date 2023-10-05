@@ -64,6 +64,6 @@ pred |>
     alpha = 0.7
   ) + scale_y_continuous(
     position = "right",
-    breaks = c(230, 250, 270, 290, 310, 330, 350),
+    breaks = c(230, 270, 310, 350),
     limits = c(230, 350)
   ) + scale_x_date(limits = c(ymd("2016-08-01"), ymd("2016-11-09"))) + theme_classic() + theme(plot.title = element_text(hjust = 0.5), axis.line.x = element_blank(), axis.line.y = element_blank(), plot.margin = unit(c(0.75,0.75,0.75,0.5), "cm"))
