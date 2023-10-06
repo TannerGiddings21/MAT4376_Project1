@@ -3,6 +3,8 @@ library(tidyverse)
   conflicts_prefer(dplyr::filter, dplyr::lag, .quiet = TRUE)
 library(R6)
 library(lubridate)
+library(extrafont)
+  font_import(paths = ".", prompt = FALSE)
 
 polls = "polls_us_election_2016.csv" |>
   read_delim(show_col_types = FALSE)
@@ -93,7 +95,7 @@ dayafter = votingday + days(1)
 oddstates = c("Utah", "New Mexico", "Idaho")
 
 # states that were well polled. We use a higher grade standard of poll in these states
-oftpolled = c("U.S.", "Arizona", "Florida", "Georgia", "Iowa", "Kansas", "Michigan", "North Carolina", "Ohio", "Texas", "Pennsylvania", "Wisconsin")
+oftpolled = c("U.S.", "Arizona", "Iowa", "Kansas", "Ohio", "Wisconsin")
 
 # thestate: capitalized string. The state/congressional district for which the polls are to be plotted
 # adjstring: capitalized string. Indicates whether the polls to be plotted are the raw numbers, FiveThirtyEight's adjusted polls, or polls adjusted in some other manner
@@ -109,10 +111,11 @@ stateplot = function(thestate, adjstring, mingrade, minmiddate, givenpolls) {
   if (thestate %in% oddstates) {
     if (thestate == "Utah") {
       toplot = candidates # plot all four candidates
-      if (mingrade == "B") mingrade = "C+"
+      mingrade = "C+"
     }
     else toplot = append(toplot, johnson) # plot Johnson in addition to Clinton and Trump
   }
+  if (thestate %in% c("Alaska", "District of Columbia", "Hawaii", "Idaho", "New Mexico", "North Dakota", "Rhode Island", "Vermont", "Wyoming")) mingrade = "B"
 
   statepolls = givenpolls |>
     filter(state == thestate, middate >= minmiddate, grade >= mingrade)
@@ -273,7 +276,7 @@ plotstates = allstates[!(allstates %in% c(mainecds, nebraskacdsonly, oftpolled))
 
 for (state in plotstates) {
   state |>
-    stateplot("Raw", "B", earliestdate, polls) |>
+    stateplot("Adjusted", "B+", earliestdate, polls) |>
     print()
 }
 
@@ -282,35 +285,17 @@ for (state in oftpolled) {
     stateplot("Raw", "B", earliestdate, polls) |>
     print()
   state |>
-    stateplot("Raw", "B+", earliestdate, polls) |>
+    stateplot("Adjusted", "B", earliestdate, polls) |>
     print()
   state |>
     stateplot("Raw", "A-", earliestdate, polls) |>
     print()
+  state |>
+    stateplot("Adjusted", "A-", earliestdate, polls) |>
+    print()
 }
 
 # Maine has two congressional districts; as such, from the data of one congressional district and of the state as a whole, we can expect to reconstruct the data for the other congressional district (as long as the poll dates are relatively close together).
-
-yaxes = c(0, 30)
-xmin = votingday
-
-# get common limits to use on axes
-  # y-limits are the largest of each;
-  # x-limits are the narrowest
-for (district in mainecds) {
-  plot = stateplot(district, "Raw", "B", earliestdate, polls)
-  yaxes = c(min(yaxes[1], layer_scales(plot)$y$range$range[1]), max(yaxes[2], layer_scales(plot)$y$range$range[2]))
-  xmin = xmin |>
-    min(layer_scales(plot)$x$range$range[1])
-}
-
-for (district in mainecds){
-  plot = stateplot(district, "Raw", "B", earliestdate, polls)
-
-  plot = plot + xlim(xmin, dayafter)+ ylim(yaxes + c(0,2))
-  plot = plot + scale_y_continuous(position = "right")
-  print(plot)
-}
 
 # Seeing as the polls for the Nebraskan congressional districts are so sparse, it's difficult to supplement the data with data from pan-Nebraskan polls -- the CD polls are so few in number that they can't serve to support or refute any supplemental data. Although Clinton and Trump polled comparably in the 2nd Nebraskan congressional district, it makes the most sense (for the sake of electoral simulation) to consider Nebraska's electoral votes as a whole, rather than allocating electoral votes by district.
 
@@ -354,6 +339,6 @@ newdata = mainepolls |>
   ) |>
   bind_rows(d1polls)
 
-plot = stateplot("Maine CD-1", "Raw", "B", earliestdate, newdata)
+plot = stateplot("Maine CD-1", "Raw", "C+", earliestdate, newdata)
 
 print(plot)
