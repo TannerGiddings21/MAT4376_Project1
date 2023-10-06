@@ -1,7 +1,7 @@
 ,pollster,polls analyzed,simple average error,races called correctly,advanced,predictive,538 grade,mean-reverted bias
-0,D+1.6Rasmussen Reports/,657,5.3,79%,+0.4,+0.7,C+,R+2.0
-1,Zogby Interactive/,465,5.6,78%,+0.8,+1.2,C-,R+0.8
-2,"Mason-Dixon Polling &amp; Research, Inc.",415,5.2,86%,-0.4,-0.2,B+,R+1.0
+0,Rasmussen Reports,657,5.3,79%,+0.4,+0.7,C+,R+2.0
+1,Zogby Interactive,465,5.6,78%,+0.8,+1.2,C-,R+0.8
+2,Mason-Dixon Polling &amp; Research Inc.,415,5.2,86%,-0.4,-0.2,B+,R+1.0
 3,Public Policy Polling,383,4.9,82%,-0.5,-0.1,B+,R+0.2
 4,Research 2000,279,5.5,88%,+0.2,+0.6,F,D+1.4
 5,American Research Group,260,7.6,75%,+0.6,+0.7,C+,R+0.1
@@ -9,18 +9,18 @@
 7,Marist College,146,5.4,88%,-0.8,-0.8,A,R+0.7
 8,Harris Interactive,135,5.5,86%,+1.2,+1.2,C-,R+1.5
 9,TCJ Research,133,6.4,59%,+3.2,+3.0,F,R+4.5
-10,"Strategic Vision, LLC",129,4.0,88%,-0.3,+0.2,F,R+1.9
-11,Opinion Savvy/,105,7.8,71%,+0.9,+1.1,C-,D+0.7
+10,Strategic Vision LLC,129,4.0,88%,-0.3,+0.2,F,R+1.9
+11,Opinion Savvy,105,7.8,71%,+0.9,+1.1,C-,D+0.7
 12,University of New Hampshire,93,5.3,88%,-0.1,-0.3,B+,D+1.7
-13,CNN/,89,5.5,76%,-0.3,-0.4,A-,R+0.1
+13,CNN,89,5.5,76%,-0.3,-0.4,A-,R+0.1
 14,Gallup,80,4.3,71%,+0.6,+0.3,B-,R+0.8
 15,Monmouth University,71,5.5,85%,-1.5,-1.2,A+,D+0.6
 16,Suffolk University,67,5.2,82%,-0.2,0.0,B+,D+0.7
 17,Gravis Marketing,55,5.8,79%,0.0,+0.5,B-,R+1.1
-18,CBS News/,55,4.7,75%,-0.3,-0.4,A-,D+0.6
+18,CBS News,55,4.7,75%,-0.3,-0.4,A-,D+0.6
 19,Public Opinion Strategies,53,5.9,66%,0.0,+0.2,B,R+1.9
 20,We Ask America,52,7.0,83%,+0.9,+1.1,C,R+0.9
-21,ABC News/,51,3.0,78%,-1.0,-0.9,A+,D+0.6
+21,ABC News,51,3.0,78%,-1.0,-0.9,A+,D+0.6
 22,Ipsos,49,4.3,78%,-0.9,-0.4,A-,D+0.1
 23,Greenberg Quinlan Rosner (Democracy Corps),48,4.4,49%,+0.2,+0.3,B-,D+2.4
 24,Mitchell Research &amp; Communications,47,8.2,70%,+2.2,+1.8,D,R+0.1
@@ -31,7 +31,7 @@
 29,University of Cincinnati (Ohio Poll),38,3.7,93%,-0.9,-0.7,A,R+1.5
 30,Selzer &amp; Company,37,4.6,84%,-1.6,-1.1,A+,R+0.0
 31,Dan Jones &amp; Associates,34,7.9,97%,+0.4,+0.8,C+,D+0.9
-32,Fox News/,34,3.9,72%,+0.1,+0.2,B,R+0.5
+32,Fox News,34,3.9,72%,+0.1,+0.2,B,R+0.5
 33,Emerson College,34,7.9,84%,+0.2,+0.3,B,R+1.3
 34,Princeton Survey Research Associates International,32,4.6,69%,0.0,-0.2,B+,D+0.3
 35,George Washington University (Battleground),32,3.5,56%,+0.2,+0.3,B,R+1.0
@@ -39,18 +39,18 @@
 37,ccAdvertising,30,7.1,88%,+1.6,+1.0,C,R+2.6
 38,Grove Insight,29,3.1,90%,-2.5,-0.8,A,D+0.5
 39,Angus Reid Global,29,3.3,93%,-2.0,-0.4,A-,R+1.3
-40,"Susquehanna Polling &amp; Research, Inc.",29,5.3,79%,+0.3,+0.3,B-,D+0.1
+40,Susquehanna Polling &amp; Research Inc.,29,5.3,79%,+0.3,+0.3,B-,D+0.1
 41,Market Shares Corp.,26,6.8,85%,+0.2,-0.1,B+,R+1.7
-42,"RKM Research and Communications, Inc.",26,5.6,87%,-0.8,-0.2,B+,R+0.2
-43,"Research &amp; Polling, Inc.",26,4.1,85%,-1.7,-0.6,A,R+0.7
+42,RKM Research and Communications Inc.,26,5.6,87%,-0.8,-0.2,B+,R+0.2
+43,Research &amp; Polling Inc.,26,4.1,85%,-1.7,-0.6,A,R+0.7
 44,Field Research Corporation (Field Poll),25,3.9,100%,-2.5,-1.1,A+,R+1.1
-45,NBC News/,25,4.2,74%,-0.6,-0.5,A-,D+0.5
-46,Fox News/Shaw &amp; Company Research,24,6.4,65%,-0.8,-0.6,A,D+0.4
+45,NBC News,25,4.2,74%,-0.6,-0.5,A-,D+0.5
+46,Fox NewsShaw &amp; Company Research,24,6.4,65%,-0.8,-0.6,A,D+0.4
 47,Landmark Communications,24,4.9,88%,-0.9,+0.2,B,D+0.5
 48,Tarrance Group,24,6.2,83%,0.0,+0.2,B,R+0.7
 49,Muhlenberg College,22,3.5,91%,-1.3,-0.8,A,R+0.5
 50,Garin-Hart-Yang Research Group,22,5.3,86%,-0.9,-0.2,B+,D+1.3
-51,KRC/,22,6.9,91%,-0.2,+0.5,B-,D+0.2
+51,KRC,22,6.9,91%,-0.2,+0.5,B-,D+0.2
 52,Global Strategy Group,21,7.1,67%,+1.5,+0.8,C+,D+1.9
 53,Mellman Group,21,4.9,79%,-0.2,+0.1,B,D+1.6
 54,Merriman River Group,21,7.7,81%,+2.3,+1.1,C-,R+2.4
@@ -67,7 +67,7 @@
 65,Ciruli Associates,17,3.6,94%,-2.0,-1.0,A+,R+0.7
 66,Critical Insights,17,8.6,88%,+2.4,+1.0,C,D+0.3
 67,Pan Atlantic SMS Group,17,6.8,91%,-0.5,0.0,B+,D+0.9
-68,IBD/,17,2.3,76%,-1.6,-0.4,A-,R+0.7
+68,IBD,17,2.3,76%,-1.6,-0.4,A-,R+0.7
 69,SoonerPoll.com,16,8.5,81%,+1.0,+0.1,B,D+1.8
 70,New England College,15,3.0,77%,-1.3,+0.2,B,R+0.6
 71,Financial Dynamics,15,2.8,100%,-1.1,+0.3,B,R+0.7
@@ -79,7 +79,7 @@
 77,Star Tribune,13,6.3,46%,+2.1,+0.8,C+,D+1.5
 78,Brown University,12,11.4,83%,+4.0,+1.4,C-,R+0.4
 79,Opinion Research Associates,12,7.9,71%,+3.7,+1.3,C-,D+1.7
-80,"Davis, Hibbitts &amp; Midghall, Inc.",12,4.3,83%,-0.6,0.0,B,R+0.0
+80,Davis Hibbitts &amp; Midghall Inc.,12,4.3,83%,-0.6,0.0,B,R+0.0
 81,Roanoke College,12,9.0,75%,+3.6,+0.8,C+,D+0.3
 82,St. Norbert College,12,3.9,88%,-1.8,-0.3,A-,D+0.3
 83,National Journal,12,2.6,100%,-2.6,-0.8,A,R+0.2
@@ -91,53 +91,53 @@
 89,University of Massachusetts Amherst,11,6.5,100%,-0.5,+0.1,B,R+0.4
 90,Vox Populi Communications,11,4.1,77%,-1.6,+0.2,B,R+0.0
 91,Anzalone Liszt Grove Research,11,7.6,55%,+2.8,+1.0,C,D+1.4
-92,"Richard Day Research, Inc.",11,5.5,100%,-0.6,+0.5,B-,R+0.8
+92,Richard Day Research Inc.,11,5.5,100%,-0.6,+0.5,B-,R+0.8
 93,SurveyMonkey,11,11.2,91%,+2.5,+1.3,C-,R+1.2
 94,Loras College,10,9.7,70%,+1.0,+0.5,B-,D+1.1
-95,"Normington, Petts &amp; Associates",10,6.4,60%,+0.6,+0.8,C+,D+0.7
+95,Normington Petts &amp; Associates,10,6.4,60%,+0.6,+0.8,C+,D+0.7
 96,Louisville Courier-Journal,10,3.3,80%,-1.7,+0.2,B,R+0.3
 97,University of Washington,10,4.0,100%,-0.9,0.0,B,D+0.2
 98,Humphrey Institute,10,13.1,40%,+6.8,+2.3,D-,D+0.8
 99,Wilson Research Strategies,10,6.9,65%,+1.0,+0.5,B-,R+0.1
 100,Big Ten,10,4.8,100%,+1.4,+1.0,C,D+1.1
-101,"Market Research Institute, Inc.",9,2.9,100%,-2.4,+0.2,B,R+0.3
+101,Market Research Institute Inc.,9,2.9,100%,-2.4,+0.2,B,R+0.3
 102,Hendrix College,9,6.7,89%,0.0,+0.6,C+,D+1.5
-103,"Harstad Strategic Research, Inc.",9,3.8,72%,-1.0,0.0,B+,D+0.8
-104,"Gonzales Research &amp; Marketing Strategies, Inc.",9,6.4,78%,+1.0,+0.5,B-,R+0.4
+103,Harstad Strategic Research Inc.,9,3.8,72%,-1.0,0.0,B+,D+0.8
+104,Gonzales Research &amp; Marketing Strategies Inc.,9,6.4,78%,+1.0,+0.5,B-,R+0.4
 105,Lake Research Partners,9,3.8,83%,-2.3,-0.2,B+,D+0.5
-106,Clout Research/,9,9.0,33%,+4.7,+1.3,C-,R+1.7
+106,Clout Research,9,9.0,33%,+4.7,+1.3,C-,R+1.7
 107,Dittman Research,9,5.9,100%,+0.2,+0.3,B-,D+1.0
 108,Harper Polling,9,4.1,100%,-1.1,+0.4,B-,D+0.3
 109,Benenson Strategy Group,9,6.2,50%,+0.6,+0.4,B-,D+0.7
 110,University of New Orleans,9,6.7,78%,+1.5,+1.0,C,D+0.3
 111,St. Cloud State University,9,6.5,67%,+2.2,+0.7,C+,D+0.4
-112,"Talmey-Drake Research &amp; Strategy, Inc.",9,7.7,50%,+1.6,+0.6,C+,R+0.4
+112,Talmey-Drake Research &amp; Strategy Inc.,9,7.7,50%,+1.6,+0.6,C+,R+0.4
 113,Datamar,8,6.3,69%,+1.7,+1.0,C,R+0.4
-114,"Schroth, Eldon &amp; Associates",8,3.2,88%,-1.1,+0.4,B-,D+0.6
+114,Schroth Eldon &amp; Associates,8,3.2,88%,-1.1,+0.4,B-,D+0.6
 115,Hamilton Campaigns,8,7.0,56%,+2.6,+0.8,C+,D+1.5
 116,Southeastern Louisiana University,8,6.6,88%,+2.4,+1.2,C-,D+0.0
 117,Potomac Incorporated,8,4.5,88%,-1.4,+0.4,B-,R+0.5
 118,University of South Alabama,8,2.8,100%,-3.0,-0.2,B+,R+0.4
-119,"National Research, Inc.",8,5.1,81%,-1.9,-0.2,B+,R+0.5
+119,National Research Inc.,8,5.1,81%,-1.9,-0.2,B+,R+0.5
 120,Arizona State University,8,8.0,100%,+2.2,+0.7,C+,D+0.9
 121,Montana State University Billings,7,3.6,57%,-3.7,-0.1,B+,D+0.6
 122,Behavior Research Center (Rocky Mountain),7,3.5,71%,-2.5,-0.6,A,D+0.1
 123,Constituent Dynamics,7,7.4,86%,0.0,+0.7,C+,R+0.0
-124,"Fairbank, Maslin, Maullin, Metz &amp; Associates",7,5.9,79%,+0.9,+0.4,B-,D+1.0
+124,Fairbank Maslin Maullin Metz &amp; Associates,7,5.9,79%,+0.9,+0.4,B-,D+1.0
 125,Maine People's Resource Center,7,7.5,86%,+1.9,+1.0,C,D+0.3
 126,West Chester University,7,5.2,100%,+0.2,+0.7,C+,D+0.2
-127,"Glengariff Group, Inc.",7,4.7,71%,-0.2,+0.2,B,R+0.1
-128,"Wiese Research Associates, Inc.",7,8.8,100%,+2.6,+0.7,C+,D+1.3
+127,Glengariff Group Inc.,7,4.7,71%,-0.2,+0.2,B,R+0.1
+128,Wiese Research Associates Inc.,7,8.8,100%,+2.6,+0.7,C+,D+1.3
 129,Hays Research Group,7,7.7,71%,+2.6,+0.7,C+,D+1.1
 130,Riley Research Associates,7,2.7,100%,-2.4,-0.1,B+,R+0.1
 131,Market Research Insight,7,1.8,100%,-4.4,-0.1,B+,D+0.2
-132,Howey Politics/,7,6.8,57%,+1.2,+0.5,B-,D+0.1
+132,Howey Politics,7,6.8,57%,+1.2,+0.5,B-,D+0.1
 133,University of Connecticut,7,3.6,93%,-1.6,-0.5,A-,R+0.4
-134,Time/,7,3.2,100%,-1.5,-0.5,A-,D+0.4
+134,Time,7,3.2,100%,-1.5,-0.5,A-,D+0.4
 135,Marquette University,7,2.6,100%,-3.8,-0.6,A,R+0.1
 136,Marketing Workshop,7,9.7,57%,+4.0,+1.4,D+,D+0.3
 137,Baydoun Consulting,6,6.8,83%,+4.0,+1.3,C-,R+1.0
-138,"Yankelovich Partners, Inc.",6,7.0,42%,+0.3,+0.3,B-,R+0.1
+138,Yankelovich Partners Inc.,6,7.0,42%,+0.3,+0.3,B-,R+0.1
 139,OnMessage Inc.,6,9.1,67%,+2.7,+0.7,C+,R+1.1
 140,University of Wisconsin (Badger Poll),6,6.9,83%,0.0,+0.3,B,D+0.2
 141,American Viewpoint,6,4.0,67%,-1.4,0.0,B,R+0.6
@@ -146,19 +146,19 @@
 144,Nielson Brothers Polling,6,8.5,83%,+4.1,+1.4,C-,D+1.4
 145,Temple University,6,3.7,100%,-1.5,0.0,B+,R+0.4
 146,Valley Research,6,11.5,83%,+5.7,+1.6,D+,D+0.4
-147,Voter/,6,5.5,100%,-0.7,+0.1,B,R+0.2
-148,"Public Strategies, Inc.",6,7.9,100%,+0.8,+0.8,C+,R+0.1
+147,Voter,6,5.5,100%,-0.7,+0.1,B,R+0.2
+148,Public Strategies Inc.,6,7.9,100%,+0.8,+0.8,C+,R+0.1
 149,Moore Information,6,6.5,67%,-0.3,+0.2,B,R+0.5
 150,Rhode Island College,5,6.1,100%,0.0,+0.7,C+,R+0.2
 151,JMC Enterprises,5,7.8,100%,+1.0,+0.8,C,R+0.9
-152,20/,5,16.6,40%,+3.6,+1.2,C-,D+0.0
+152,20,5,16.6,40%,+3.6,+1.2,C-,D+0.0
 153,Stockton College,5,4.5,100%,-0.6,+0.2,B,D+0.5
 154,Hellenthal &amp; Associates,5,8.2,40%,+3.4,+0.7,C+,D+0.4
 155,Millersville University,5,14.1,80%,+7.2,+1.7,D,R+1.5
-156,Greenberg Quinlan Rosner/,5,4.4,100%,-2.8,0.0,B+,R+0.6
+156,Greenberg Quinlan Rosner,5,4.4,100%,-2.8,0.0,B+,R+0.6
 157,Ivan Moore Research,5,9.4,40%,+4.5,+0.9,C,D+1.3
 158,Greg Smith and Associates,5,8.5,60%,+2.6,+1.1,C,D+1.2
-159,"International Communications Research, Inc.",5,3.1,20%,-1.6,+0.5,B-,R+0.1
+159,International Communications Research Inc.,5,3.1,20%,-1.6,+0.5,B-,R+0.1
 160,Virginia Commonwealth University,5,4.9,100%,+0.8,+0.4,B-,R+0.3
 161,Crawford Johnson &amp; Northcott Inc.,5,4.6,100%,-3.0,+0.4,B-,D+0.1
 162,DFM Research,5,6.3,80%,+0.5,+0.3,B-,D+0.9
@@ -167,7 +167,7 @@
 165,Middle Tennessee State University,4,8.0,100%,+0.9,+0.4,B-,D+0.1
 166,University of Texas,4,1.2,100%,-5.0,+0.5,B-,D+0.1
 167,Wirthlin Worldwide,4,4.6,75%,-0.8,+0.6,C+,R+0.5
-168,"Frank N. Magid Associates, Inc.",4,4.6,100%,-1.8,+0.5,B-,D+0.5
+168,Frank N. Magid Associates Inc.,4,4.6,100%,-1.8,+0.5,B-,D+0.5
 169,Orion Strategies,4,3.1,100%,-3.6,+0.5,B-,D+0.1
 170,Alabama State University,4,6.4,50%,-3.4,+0.5,B-,D+0.4
 171,Northern Arizona University,4,3.6,100%,-3.3,+0.5,B-,R+0.4
@@ -183,7 +183,7 @@
 181,Southern Media &amp; Opinion Research,4,6.4,100%,+0.9,+0.4,B-,D+0.0
 182,Cole Hargrave Snodgrass &amp; Associates,4,6.3,75%,-1.3,+0.1,B,D+0.3
 183,Clarity Campaign Labs,4,3.2,63%,-0.1,+0.3,B,D+0.4
-184,"Political Marketing International, Inc./",4,4.3,63%,-1.2,+0.6,B-,D+0.1
+184,Political Marketing International Inc.,4,4.3,63%,-1.2,+0.6,B-,D+0.1
 185,Purple Strategies,4,3.0,88%,-1.2,+0.6,B-,R+0.4
 186,Hill Research Consultants,4,5.4,50%,-0.1,+0.3,B,R+0.4
 187,Philadelphia Inquirer,4,3.0,100%,-1.5,+0.1,B,R+0.3
@@ -195,7 +195,7 @@
 193,CallFire,4,3.9,75%,+0.6,+0.3,B-,R+0.5
 194,Market Solutions Group,4,4.3,100%,-1.0,+0.6,C+,R+0.0
 195,University of Wisconsin Milwaukee,3,5.3,100%,-1.5,+0.6,C+,R+0.5
-196,"Keating Research, Inc.",3,2.2,67%,-3.0,+0.1,B,R+0.0
+196,Keating Research Inc.,3,2.2,67%,-3.0,+0.1,B,R+0.0
 197,TargetPoint,3,14.0,83%,+3.9,+1.1,C,D+0.4
 198,PSI,3,12.5,67%,+2.5,+0.9,C,R+0.1
 199,The Polling Company Inc.,3,3.7,100%,-1.5,+0.1,B,R+0.0
@@ -206,7 +206,7 @@
 204,Midwest Survey and Research,3,7.3,100%,-0.9,+0.6,C+,R+0.1
 205,Manhattanville College,3,6.5,100%,-0.9,+0.6,C+,R+0.5
 206,University of Iowa,3,15.9,67%,+5.0,+0.7,C+,R+0.2
-207,Polling Company/,3,4.6,33%,+2.0,+0.9,C,R+0.4
+207,Polling Company,3,4.6,33%,+2.0,+0.9,C,R+0.4
 208,Dixie Strategies,3,7.9,83%,-0.9,+0.6,C+,R+0.3
 209,Braun Research,3,9.1,100%,+3.3,+0.6,C+,D+0.8
 210,McCulloch Research &amp; Polling,3,4.9,67%,-0.1,+0.7,C+,R+0.3
@@ -225,7 +225,7 @@
 223,Indiana University-Purdue University Fort Wayne,3,23.5,0%,+10.3,+1.2,C-,R+1.3
 224,StPetePolls.org,2,2.0,25%,-1.0,+0.7,C+,D+0.1
 225,Loyola University (New Orleans),2,12.1,100%,+9.6,+1.3,C-,D+0.8
-226,"Baselice &amp; Associates, Inc.",2,10.0,100%,+4.3,+0.6,C+,D+0.2
+226,Baselice &amp; Associates Inc.,2,10.0,100%,+4.3,+0.6,C+,D+0.2
 227,McKeon &amp; Associates,2,0.9,100%,-6.6,+0.2,B,R+0.0
 228,Gordon S. Black Corp.,2,6.3,100%,-0.1,+0.7,C+,R+0.4
 229,GaPundit.com,2,8.3,25%,+3.0,+0.9,C,D+0.5
@@ -257,8 +257,8 @@
 255,Research America Inc.,2,20.7,100%,+8.2,+0.8,C+,R+0.4
 256,Kiley &amp; Company,2,5.1,100%,-1.7,+0.2,B,D+0.2
 257,CrossTarget,2,7.7,100%,+1.6,+0.8,C+,R+0.5
-258,North Star Opinion Research/,2,7.0,50%,+2.6,+0.5,B-,R+0.4
-259,"Fabrizio, Lee &amp; Associates",2,5.9,50%,-0.4,+0.3,B,D+0.4
+258,North Star Opinion Research,2,7.0,50%,+2.6,+0.5,B-,R+0.4
+259,Fabrizio Lee &amp; Associates,2,5.9,50%,-0.4,+0.3,B,D+0.4
 260,Bannon Communications,2,10.4,100%,+4.0,+1.0,C,D+0.6
 261,Independent Market Research,2,5.7,100%,+1.7,+0.8,C+,D+0.3
 262,Douglas Fulmer &amp; Associates,2,5.1,100%,-2.9,+0.6,C+,R+0.3
@@ -268,7 +268,7 @@
 266,A&A; Research,1,10.1,0%,+3.7,+0.8,C,R+0.3
 267,Southern Opinion Research,1,9.4,100%,+3.7,+0.8,C,D+0.3
 268,Strategic Services,1,5.5,0%,+0.5,+0.7,C+,D+0.2
-269,"California State University, Bakersfield",1,9.8,0%,+3.9,+0.9,C,R+0.3
+269,California State University Bakersfield,1,9.8,0%,+3.9,+0.9,C,R+0.3
 270,New Frontier Strategy,1,21.6,0%,+3.9,+0.9,C,R+0.1
 271,Marketing Research Institute,1,7.4,0%,+4.6,+0.9,C,R+0.2
 272,Saint Leo University,1,4.1,0%,+0.2,+0.7,C+,D+0.1
@@ -277,10 +277,10 @@
 275,ASA Marketing Group,1,5.5,100%,-0.4,+0.7,C+,D+0.2
 276,Y2 Analytics,1,28.4,100%,+12.6,+0.7,C+,R+0.4
 277,Market Trends Pacific,1,4.6,50%,-0.5,+0.7,C+,D+0.1
-278,"SMS Research &amp; Marketing Services, Inc.",1,9.8,0%,+5.7,+0.9,C,R+0.3
+278,SMS Research &amp; Marketing Services Inc.,1,9.8,0%,+5.7,+0.9,C,R+0.3
 279,GCR &amp; Associates,1,18.3,100%,+6.1,+0.9,C,R+0.1
 280,Wick Communications,1,2.8,100%,-0.8,+0.7,C+,D+0.1
-281,"MarketAide Services, Inc.",1,11.2,100%,+6.9,+1.0,C,D+0.4
+281,MarketAide Services Inc.,1,11.2,100%,+6.9,+1.0,C,D+0.4
 282,NRECA Market Research,1,6.3,100%,-1.0,+0.7,C+,D+0.2
 283,Analytical Group,1,4.0,100%,-1.1,+0.7,C+,D+0.1
 284,Iona College,1,4.4,100%,-1.1,+0.7,C+,D+0.1
@@ -298,13 +298,13 @@
 296,Multi Quest International Inc,1,1.9,100%,-2.8,+0.7,C+,D+0.1
 297,MBQF,1,4.3,100%,-2.9,+0.7,C+,D+0.4
 298,Multi-Quest International,1,4.1,0%,-3.0,+0.7,C+,D+0.1
-299,"Central Surveys, Inc.",1,1.7,0%,-3.3,+0.7,C+,D+0.1
+299,Central Surveys Inc.,1,1.7,0%,-3.3,+0.7,C+,D+0.1
 300,Neighbor,1,17.1,100%,+13.7,+1.2,C-,R+0.6
 301,Cooper &amp; Secrest,1,2.6,0%,-3.5,+0.7,C+,R+0.1
 302,BIGresearch,1,2.0,100%,-3.6,+0.7,C+,R+0.1
 303,Wood Communications Group,1,0.8,100%,-3.8,+0.7,C+,D+0.0
 304,Cranford &amp; Associates,1,2.5,100%,-3.9,+0.7,C+,D+0.1
-305,"Dynamic Marketing, Inc.",1,3.0,100%,-4.1,+0.7,C+,D+0.1
+305,Dynamic Marketing Inc.,1,3.0,100%,-4.1,+0.7,C+,D+0.1
 306,RMS Research,1,0.9,100%,-5.4,+0.7,C+,R+0.0
 307,Market Strategies International,1,1.1,100%,-5.6,+0.7,C+,R+0.0
 308,University of Tennessee,1,2.7,100%,-5.6,+0.7,C+,R+0.1
