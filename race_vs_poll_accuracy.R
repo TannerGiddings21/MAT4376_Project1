@@ -1,4 +1,4 @@
-races_and_errors = read.csv("C:\\Users\\mtama\\OneDrive - University of Ottawa\\4th Year\\Fall 2023\\Topics in Statistics\\Projects\\Project 1\\regression\\races_and_errors.csv")
+races_and_errors = read.csv("races_and_errors.csv")
 error_vs_race = lm(Error ~ American_Indian_or_Alaska_Native_Alone_percentage + American_Indian_or_Alaska_Native_and_Black_or_African_American_percentage + American_Indian_or_Alaska_Native_and_White_percentage + Asian_Alone_percentage + Asian_and_White_percentage + Black_or_African_American_Alone_percentage + Black_or_African_American_and_White_percentage + Hispanic_or_Latino_percentage + Native_Hawaiian_or_Other_Pacific_Islander_Alone_percentage + Remainder_of_Two_or_More_Race_Responses_percentage + White_Alone_percentage, data = races_and_errors)
 error_vs_race_with_cross_terms = lm(Error ~ Black_or_African_American_Alone_percentage*Hispanic_or_Latino_percentage*White_Alone_percentage, data = races_and_errors)
 summary(error_vs_race_with_cross_terms)
