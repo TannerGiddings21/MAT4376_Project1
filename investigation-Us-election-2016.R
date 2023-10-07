@@ -105,7 +105,12 @@ oftpolled = c("U.S.", "Arizona", "Iowa", "Kansas", "Ohio", "Wisconsin")
 # returns a filled ggplot
 stateplot = function(thestate, adjstring, mingrade, minmiddate, givenpolls) {
 
-  plot = ggplot()
+  plot = ggplot() + theme_classic() + theme(
+    text = element_text(
+      family = "Geneva",
+      size = 12
+    )
+  )
   toplot = list(clinton, trump)
 
   if (thestate %in% oddstates) {
@@ -282,13 +287,7 @@ for (state in plotstates) {
 
 for (state in oftpolled) {
   state |>
-    stateplot("Raw", "B", earliestdate, polls) |>
-    print()
-  state |>
     stateplot("Adjusted", "B", earliestdate, polls) |>
-    print()
-  state |>
-    stateplot("Raw", "A-", earliestdate, polls) |>
     print()
   state |>
     stateplot("Adjusted", "A-", earliestdate, polls) |>
